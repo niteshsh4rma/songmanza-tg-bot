@@ -16,7 +16,7 @@ def fetchjson(url):
         
 
 def start(update, context):
-    text=f"Hey {update.effective_user.full_name}! 😍\n\n✔ You can download any song for free by using  me.\n✔ Just share the name of the song\n\nI am created by {creater_name}"
+    text=f"Hey {update.effective_user.full_name}!\n\n->You can download any song for free by using  me.\n-> Just share the name of the song\n\nI am created by {creater_name}"
     update.message.reply_text(text)
 
 def buttonToDownload(update, context):
@@ -60,7 +60,7 @@ def download(update, context):
                 global response_json
                 response_json = json.loads(response)
             except:
-                outcome_msg.edit_text("No results found 😢")
+                outcome_msg.edit_text("No results found.")
 
             if (response_json["result"]):
                 print("result is here")
@@ -80,7 +80,7 @@ def download(update, context):
 
                 context.bot.delete_message(chat_id=update.effective_chat.id,message_id=outcome_msg.message_id)
 
-                select_msg = update.message.reply_text(f"🔥 Results for : {searched_text}\nClick the Button to download.", reply_markup=reply_markup)
+                select_msg = update.message.reply_text(f"Results for : {searched_text}\nClick the Button to download.", reply_markup=reply_markup)
 
                 global deleted_msg_id
 
@@ -99,7 +99,7 @@ def download(update, context):
 
     
         except KeyError:
-            outcome_msg.edit_text("No results found 😢")
+            outcome_msg.edit_text("No results found.")
 
     else:
         update.message.reply_text("Please Wait..")  
