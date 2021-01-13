@@ -10,7 +10,7 @@ deleted_msg_id = 0
 wait = False
 
 def fetchjson(url):
-    print("working")
+    
     response = requests.get(url)
     return response
         
@@ -27,7 +27,7 @@ def buttonToDownload(update, context):
 
     downloading_msg = context.bot.sendMessage(chat_id=update.effective_chat.id, text="Downloading 🏃‍♂️")
 
-    print(deleted_msg_id)
+    
 
     context.bot.delete_message(chat_id=update.effective_chat.id,message_id=deleted_msg_id)
 
@@ -63,7 +63,7 @@ def download(update, context):
                 outcome_msg.edit_text("No results found.")
 
             if (response_json["result"]):
-                print("result is here")
+                
 
                 keyboard = []
                 count = 0
@@ -85,17 +85,6 @@ def download(update, context):
                 global deleted_msg_id
 
                 deleted_msg_id = select_msg.message_id
-
-                print(select_msg.message_id)
-                
-
-                # print(response_json["result"][0])
-
-                # song = response_json["result"][0]
-                # update.message.reply_photo(song["song_image"])   
-                # update.message.reply_audio(song["stream_link"])
-
-                # update.message.reply_document('')
 
     
         except KeyError:
