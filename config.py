@@ -1,4 +1,4 @@
-bot_token='1554912426:AAHQbTR3TZJA7rL2BA0bGtTZy5fb4e33DiU'
+bot_token='TOKEN'
 
 creater_name = '@niteshsh4rma'
 
