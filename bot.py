@@ -25,23 +25,33 @@ def buttonToDownload(update, context):
 
     index = int(query.data)
 
+    global response_json
+
+    if (len(response_json) == index):
+        response_json = {}
+        context.bot.delete_message(chat_id=update.effective_chat.id,message_id=deleted_msg_id)
+
+        return
+
+
     downloading_msg = context.bot.sendMessage(chat_id=update.effective_chat.id, text="Downloading 🏃‍♂️")
 
     
 
     context.bot.delete_message(chat_id=update.effective_chat.id,message_id=deleted_msg_id)
 
-    song = response_json["result"][index]
+    song = response_json[index]
 
-    caption = f"{song['song_title']}\n{song['album_title']}\n{song['artist_name']}"
+    caption = f"{song['song']}\n{song['album']}"
 
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=song["song_image"], caption=caption)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=song["image"], caption=caption)
 
-    context.bot.send_audio(chat_id=update.effective_chat.id, audio=song["stream_link"], title=song['song_title'])
+    context.bot.send_audio(chat_id=update.effective_chat.id, audio=song["media_url"], title=song['song'])
 
 
     context.bot.delete_message(chat_id=update.effective_chat.id,message_id=downloading_msg.message_id)
 
+    response_json = {}
 
 
 
@@ -62,19 +72,26 @@ def download(update, context):
             except:
                 outcome_msg.edit_text("No results found.")
 
-            if (response_json["result"]):
+            if (response_json):
                 
 
                 keyboard = []
                 count = 0
 
                 temp_list = []
-                for result in response_json["result"]:
-                    temp_list.append(InlineKeyboardButton(result["song_title"], callback_data=str(count)))
+                for result in response_json:
+                    temp_list.append(InlineKeyboardButton(result["song"], callback_data=str(count)))
                     
                     keyboard.append(list(temp_list))
                     temp_list.clear()
                     count += 1
+
+                finalist = [InlineKeyboardButton('<--Cancel-->', callback_data=str(count))]
+
+                keyboard.append(list(finalist))
+                finalist.clear()
+                
+
                 
                 reply_markup = InlineKeyboardMarkup(keyboard)
 
